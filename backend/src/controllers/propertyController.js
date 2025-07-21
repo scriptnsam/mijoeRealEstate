@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Property = require('../models/Property');
 const { resSuccess, resError } = require('../utils/response');
-const { propertySchema } = require('../validators/property')
+const { propertySchema, updatePropertySchema } = require('../validators/property')
 const uploadToCloudinary = require('../utils/uploadToCloudinary');
 
 exports.createProperty = async (req, res) => {
@@ -67,7 +67,7 @@ exports.getPropertyById = async (req, res) => {
 exports.updateProperty = async (req, res) => {
   try {
     // Validate request body
-    const { error, value } = propertySchema.validate(req.body, {
+    const { error, value } = updatePropertySchema.validate(req.body, {
       abortEarly: false,
       allowUnknown: false
     });

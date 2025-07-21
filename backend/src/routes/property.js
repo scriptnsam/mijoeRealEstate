@@ -6,7 +6,7 @@ const upload = require('../middleware/multer');
 router.post('/', authenticate, restrictTo('admin', 'agent'), upload.array('images'), createProperty); // protected: admin/owner
 router.get('/', getAllProperties);
 router.get('/:id', getPropertyById);
-router.put('/:id', authenticate, restrictTo('admin', 'agent'), updateProperty); // protected: admin/owner
+router.put('/:id', authenticate, restrictTo('admin', 'agent'), upload.array('images'), updateProperty); // protected: admin/owner
 router.delete('/:id', authenticate, restrictTo('admin', 'agent'), deleteProperty); // protected
 
 module.exports = router;
