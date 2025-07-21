@@ -119,9 +119,10 @@
               : `<img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="No image">`;
 
             const priceLabel = property.type === 'sale' ? 'Price' : 'Negotiable Price';
-            const actionButton = property.type === 'sale'
-              ? `<button class="btn btn-success" style="background-color: red;">Make Payment</button>`
+            /** const actionButton = property.type === 'sale'
+              ?`<button class="btn btn-success" style="background-color: red;">Make Payment</button>`
               : `<button class="btn btn-warning">Available To Let</button>`;
+            */
 
             card.innerHTML = `
               <div class="card mb-4">
@@ -132,7 +133,6 @@
                   <p class="card-text"><strong>${priceLabel}: ₦${property.price.toLocaleString()}</strong></p>
                   <button class="btn btn-primary mb-2"
                     onClick="window.location.href='https://forms.gle/hJ18vTv6KZT1yaeV9'">Make Enquiry</button>
-                  ${actionButton}
                 </div>
               </div>
             `;
