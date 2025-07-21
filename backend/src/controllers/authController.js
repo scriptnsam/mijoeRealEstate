@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-const {resError, resSuccess} = require('../utils/response');
+const { resError, resSuccess } = require('../utils/response');
 
 // Define Joi validation schema
 const registerSchema = Joi.object({
@@ -12,16 +12,17 @@ const registerSchema = Joi.object({
   confirmPassword: Joi.string().min(6).required()
 });
 
+
 // Controller function
 const registerUser = async (req, res) => {
   try {
     // Validate incoming data
-    const {error, value} = registerSchema.validate(req.body);
+    const { error, value } = registerSchema.validate(req.body);
     if (error) {
       return resError(res, error.details[0].message, 400)
     }
 
-    const {fullname, email, phoneNumber, password, confirmPassword} = value;
+    const { fullname, email, phoneNumber, password, confirmPassword } = value;
 
     // Check if both passwords are thesame
     if (password !== confirmPassword) {
@@ -30,28 +31,25 @@ const registerUser = async (req, res) => {
 
     // Check if user with email or phone already exists
     const existingUser = await User.findOne({
-      $or: [{email}, {phoneNumber}]
+      $or: [{ email }, { phoneNumber }]
     });
     if (existingUser) {
       return resError(res, "Email or phone number already in use", 409)
     }
 
     // Create new user (password is hashed by the model's pre-save hook)
-    const newUser = new User({fullname, email, phoneNumber, password});
+    const newUser = new User({ fullname, email, phoneNumber, password });
     await newUser.save();
 
     // Respond (omit password from response)
-    const {password: _, ...userData} = newUser.toObject();
-    return resSuccess(res, 'Registration successful', {user: userData}, 201)
+    const { password: _, ...userData } = newUser.toObject();
+    return resSuccess(res, 'Registration successful', { user: userData }, 201)
 
   } catch (err) {
     console.error(err);
     return resError(res)
   }
 };
-
-
-
 
 
 
@@ -69,7 +67,7 @@ const generateToken = (user) => {
       tokenVersion: user.tokenVersion
     },
     process.env.JWT_SECRET,
-    {expiresIn: process.env.JWT_EXPIRES_IN || '1d'}
+    { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
   );
 };
 
@@ -77,15 +75,15 @@ const generateToken = (user) => {
 const loginUser = async (req, res) => {
   try {
     // Validate request body
-    const {error: validationError, value} = loginSchema.validate(req.body);
+    const { error: validationError, value } = loginSchema.validate(req.body);
     if (validationError) {
       return resError(res, validationError.details[0].message, 400);
     }
 
-    const {email, password} = value;
+    const { email, password } = value;
 
     // Check if user exists
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     if (!user) {
       return resError(res, 'Invalid email or password', 401);
     }
@@ -105,7 +103,7 @@ const loginUser = async (req, res) => {
 
     const token = generateToken(user);
 
-    const {password: _, ...userData} = user.toObject();
+    const { password: _, ...userData } = user.toObject();
 
     res.cookie('token', token, {
       httpOnly: true,
@@ -146,4 +144,4 @@ const logoutUser = async (req, res) => {
   }
 };
 
-module.exports = {loginUser, registerUser, logoutUser};
+module.exports = { loginUser, registerUser, logoutUser };

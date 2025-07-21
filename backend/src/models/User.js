@@ -31,12 +31,17 @@ const userSchema = new mongoose.Schema({
   tokenVersion: {
     type: Number,
     default: 0
+  },
+  role: {
+    type: String,
+    enum: ["user", "agent", "admin"],
+    default: "user"
   }
-}, {timestamps: true});
+}, { timestamps: true });
 
 
 // 🔐 Hash password before saving
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next(); // only hash if modified or new
   try {
     const salt = await bcrypt.genSalt(10);
@@ -48,7 +53,7 @@ userSchema.pre('save', async function (next) {
 });
 
 // 🧪 Method to compare password during login
-userSchema.methods.comparePassword = function (candidatePassword) {
+userSchema.methods.comparePassword = function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 

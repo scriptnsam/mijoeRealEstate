@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const {resError} = require('../utils/response');
+const { resError } = require('../utils/response');
 
 const authenticate = async (req, res, next) => {
   try {
@@ -23,5 +23,15 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-module.exports = {authenticate};
 
+// Accepts one or more roles
+const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return resError(res, 'Access denied. Insufficient permission', 403);
+    }
+    next();
+  };
+};
+
+module.exports = { authenticate, restrictTo };
