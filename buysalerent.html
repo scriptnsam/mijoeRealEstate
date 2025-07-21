@@ -1,202 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy & Sell Properties</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
-    <style>
-        .hidden { display: none; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy & Sell Properties</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
+  <style>
+    .hidden {
+      display: none;
+    }
+
+    video,
+    img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+  </style>
 </head>
+
 <body>
 
-      <!-- Header -->
+  <!-- Header -->
   <header>
-    <!-- Add your header content here -->
-    <div id="header"></div> <!-- This is where the header will be inserted -->
-
+    <div id="header"></div>
     <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('header').innerHTML = data)
-            .catch(error => console.error('Error loading the file:', error));
+      fetch('header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data)
+        .catch(error => console.error('Error loading header:', error));
     </script>
   </header>
 
-  <!-- banner -->
+  <!-- Banner -->
   <div class="inside-banner">
-    <div class="container"> 
+    <div class="container">
       <span class="pull-right"><a href="#">Home</a> / Property To Let And For Sale</span>
     </div>
   </div>
-  <!-- banner -->
 
-    <div class="container my-4">
+  <div class="container my-4">
 
-        <!-- Toggle Buttons -->
-        <div class="d-flex justify-content-center mb-3">
-            <button id="showBuy" class="btn btn-success w-50">Properties For Sale</button>
-            <button id="showSell" class="btn btn-danger w-50">Properties To Let</button>
-        </div>        
-
-        <!-- Search, Filter, and Sort -->
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <input type="text" id="searchBox" class="form-control" placeholder="Search properties...">
-            </div>
-            <div class="col-md-4">
-                <select id="filterLocation" class="form-control">
-                    <option value="">Filter by Location</option>
-                    <option value="Lagos">Lagos</option>
-                    <option value="Abuja">Abuja</option>
-                    <option value="Port Harcourt">Port Harcourt</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <select id="sortPrice" class="form-control">
-                    <option value="">Sort by Price</option>
-                    <option value="low">Low to High</option>
-                    <option value="high">High to Low</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Property to Buy Section -->
-        <section id="buySection">
-            <h3 class="text-center text-success">Properties For Sale</h3>
-            <div class="row property-list">
-                
-                <div class="col-md-4 property-item" data-price="35000000" data-location="Afao Road">
-                    <div class="card">
-                        <video controls>
-                            <source src="https://res.cloudinary.com/dicr3qvdg/video/upload/v1743407468/Mijoe_Prison_Road_Property_eczvft.mp4">
-                          </video>
-                          
-                        <div class="card-body">
-                            <h5 class="card-title">7 units of 2 bedroom flat (3 toilets each)</h5>
-                            <p class="card-text"><Strong>Location:</Strong> Very close to army check point along Afao road, Ado-Ekiti, Ekiti State.</p>
-                            <p class="card-text"><strong>Price: ₦*********</strong></p>
-                            <button class="btn btn-primary" style="margin-bottom: 10px;">Make Enquiry</button>
-                            <button class="btn btn-success" style="background-color: red;">Make Payment</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 property-item" data-price="120000000" data-location="EKSU Road">
-                    <div class="card">
-                        <video controls>
-                            <source src="https://res.cloudinary.com/dicr3qvdg/video/upload/v1743407463/Mijoe_Real_Estate_EKSU_Property_ir6dqk.mp4">
-                          </video>
-                        <div class="card-body">
-                            <h5 class="card-title">4 Bedroom Flat</h5>
-                            <p class="card-text"><strong> Location:</strong> Ilokun, EKSU Road, Ado-Ekiti, Ekiti State.</p>
-                            <p class="card-text"><strong>Price: ₦*********</strong></p>
-                            <button class="btn btn-primary" style="margin-bottom: 10px;">Make Enquiry</button>
-                            <button class="btn btn-success" style="background-color: red;">Make Payment</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Property to Sell Section (Initially Hidden) -->
-        <section id="sellSection" class="hidden">
-            <h3 class="text-center text-danger">Properties To Let</h3>
-            <div class="row property-list">
-
-                <div class="col-md-4 property-item" data-price="20000000" data-location="Poly Road">
-                    <div class="card">
-                        <video controls>
-                            <source src=https://res.cloudinary.com/dicr3qvdg/video/upload/v1743407461/Mijoe_Real_Estate_CBN_Property_qaaukf.mp4>
-                          </video>
-                        <div class="card-body">
-                            <h5 class="card-title">A room and parlour self-contained</h5>
-                            <p class="card-text"><strong>Location:</strong> South Western Hotel, Along Poly Road,  Ado Ekiti, Ekiti State.</p>
-                            <p class="card-text"><strong>Negotiable Price: ₦*******</strong></p>
-                            <button class="btn btn-primary">Make Enquiry</button>
-                            <button class="btn btn-warning">Available To Let</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4 property-item" data-price="15000000" data-location="Olorunsogo">
-                    <div class="card">
-                        <video controls>
-                            <source src=https://res.cloudinary.com/dicr3qvdg/video/upload/v1743406885/L3_i0pjf4.mp4>
-                          </video>
-                        <div class="card-body">
-                            <h5 class="card-title">A room self contain </h5>
-                            <p class="card-text"><strong> Location:</strong> Olorunsogo,  Ado-Ekiti, Ekiti State.</p>
-                            <p class="card-text"><strong>Negotiable Price: ₦*********</strong></p>
-                            <button class="btn btn-primary">Make Enquiry</button>
-                            <button class="btn btn-warning">Available To Let</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+    <!-- Toggle Buttons -->
+    <div class="d-flex justify-content-center mb-3">
+      <button id="showBuy" class="btn btn-success w-50">Properties For Sale</button>
+      <button id="showSell" class="btn btn-danger w-50">Properties To Let</button>
     </div>
 
-    <!-- Footer -->
-  <footer>
-    <!-- Add your footer content here -->
-    <div id="footer"></div> <!-- This is where the header will be inserted -->
+    <!-- Search, Filter, and Sort -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <input type="text" id="searchBox" class="form-control" placeholder="Search properties...">
+      </div>
+      <div class="col-md-4">
+        <select id="filterLocation" class="form-control">
+          <option value="">Filter by Location</option>
+          <option value="Lagos">Lagos</option>
+          <option value="Abuja">Abuja</option>
+          <option value="Port Harcourt">Port Harcourt</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select id="sortPrice" class="form-control">
+          <option value="">Sort by Price</option>
+          <option value="low">Low to High</option>
+          <option value="high">High to Low</option>
+        </select>
+      </div>
+    </div>
 
-  <script>
+    <!-- Property to Buy Section -->
+    <section id="buySection">
+      <h3 class="text-center text-success">Properties For Sale</h3>
+      <div class="row property-list"></div>
+    </section>
+
+    <!-- Property to Sell Section (Initially Hidden) -->
+    <section id="sellSection" class="hidden">
+      <h3 class="text-center text-danger">Properties To Let</h3>
+      <div class="row property-list"></div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div id="footer"></div>
+    <script>
       fetch('footer.html')
-          .then(response => response.text())
-          .then(data => document.getElementById('footer').innerHTML = data)
-          .catch(error => console.error('Error loading the file:', error));
-  </script>
+        .then(response => response.text())
+        .then(data => document.getElementById('footer').innerHTML = data)
+        .catch(error => console.error('Error loading footer:', error));
+    </script>
   </footer>
 
-    <script>
-        // Toggle Sections
-        document.getElementById("showBuy").addEventListener("click", function () {
-            document.getElementById("buySection").classList.remove("hidden");
-            document.getElementById("sellSection").classList.add("hidden");
-        });
+  <!-- Script to Populate Properties -->
+  <script>
+    fetch('/api/properties')
+      .then(res => res.json())
+      .then(response => {
+        if (response.status === "success") {
+          const properties = response.data;
 
-        document.getElementById("showSell").addEventListener("click", function () {
-            document.getElementById("sellSection").classList.remove("hidden");
-            document.getElementById("buySection").classList.add("hidden");
-        });
+          const buyList = document.querySelector('#buySection .property-list');
+          const sellList = document.querySelector('#sellSection .property-list');
 
-        // Search Function
-        document.getElementById("searchBox").addEventListener("input", function () {
-            let searchValue = this.value.toLowerCase();
-            document.querySelectorAll(".property-item").forEach(item => {
-                let title = item.querySelector(".card-title").textContent.toLowerCase();
-                item.style.display = title.includes(searchValue) ? "block" : "none";
-            });
-        });
+          properties.forEach(property => {
+            const card = document.createElement('div');
+            card.className = 'col-md-4 property-item';
+            card.dataset.price = property.price;
+            card.dataset.location = property.location;
 
-        // Filter by Location
-        document.getElementById("filterLocation").addEventListener("change", function () {
-            let filterValue = this.value;
-            document.querySelectorAll(".property-item").forEach(item => {
-                let location = item.dataset.location;
-                item.style.display = filterValue === "" || location === filterValue ? "block" : "none";
-            });
-        });
+            const mediaHTML = property.images && property.images.length > 0
+              ? `<img src="${property.images[0]}" class="card-img-top" alt="Property Image">`
+              : `<img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="No image">`;
 
-        // Sort by Price
-        document.getElementById("sortPrice").addEventListener("change", function () {
-            let sortValue = this.value;
-            let properties = Array.from(document.querySelectorAll(".property-item"));
-            properties.sort((a, b) => {
-                let priceA = parseInt(a.dataset.price);
-                let priceB = parseInt(b.dataset.price);
-                return sortValue === "low" ? priceA - priceB : priceB - priceA;
-            });
-            properties.forEach(item => item.parentElement.appendChild(item));
+            const priceLabel = property.type === 'sale' ? 'Price' : 'Negotiable Price';
+            const actionButton = property.type === 'sale'
+              ? `<button class="btn btn-success" style="background-color: red;">Make Payment</button>`
+              : `<button class="btn btn-warning">Available To Let</button>`;
+
+            card.innerHTML = `
+              <div class="card mb-4">
+                ${mediaHTML}
+                <div class="card-body">
+                  <h5 class="card-title">${property.title}</h5>
+                  <p class="card-text"><strong>Location:</strong> ${property.location}</p>
+                  <p class="card-text"><strong>${priceLabel}: ₦${property.price.toLocaleString()}</strong></p>
+                  <button class="btn btn-primary mb-2"
+                    onClick="window.location.href='https://forms.gle/hJ18vTv6KZT1yaeV9'">Make Enquiry</button>
+                  ${actionButton}
+                </div>
+              </div>
+            `;
+
+            if (property.type === 'sale') {
+              buyList.appendChild(card);
+            } else if (property.type === 'rent') {
+              sellList.appendChild(card);
+            }
+          });
+        } else {
+          alert("Failed to load properties.");
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching properties:", error);
+        alert("An error occurred while loading properties.");
+      });
+  </script>
+
+  <!-- Interactivity Scripts -->
+  <script>
+    document.getElementById("showBuy").addEventListener("click", function () {
+      document.getElementById("buySection").classList.remove("hidden");
+      document.getElementById("sellSection").classList.add("hidden");
+    });
+
+    document.getElementById("showSell").addEventListener("click", function () {
+      document.getElementById("sellSection").classList.remove("hidden");
+      document.getElementById("buySection").classList.add("hidden");
+    });
+
+    document.getElementById("searchBox").addEventListener("input", function () {
+      let searchValue = this.value.toLowerCase();
+      document.querySelectorAll(".property-item").forEach(item => {
+        let title = item.querySelector(".card-title").textContent.toLowerCase();
+        item.style.display = title.includes(searchValue) ? "block" : "none";
+      });
+    });
+
+    document.getElementById("filterLocation").addEventListener("change", function () {
+      let filterValue = this.value;
+      document.querySelectorAll(".property-item").forEach(item => {
+        let location = item.dataset.location;
+        item.style.display = filterValue === "" || location === filterValue ? "block" : "none";
+      });
+    });
+
+    document.getElementById("sortPrice").addEventListener("change", function () {
+      let sortValue = this.value;
+      let buyItems = Array.from(document.querySelectorAll("#buySection .property-item"));
+      let sellItems = Array.from(document.querySelectorAll("#sellSection .property-item"));
+      const sortItems = (items, container) => {
+        items.sort((a, b) => {
+          let priceA = parseInt(a.dataset.price);
+          let priceB = parseInt(b.dataset.price);
+          return sortValue === "low" ? priceA - priceB : priceB - priceA;
         });
-    </script>
+        items.forEach(item => container.appendChild(item));
+      };
+      sortItems(buyItems, document.querySelector("#buySection .property-list"));
+      sortItems(sellItems, document.querySelector("#sellSection .property-list"));
+    });
+  </script>
 
 </body>
+
 </html>

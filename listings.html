@@ -1,241 +1,145 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijoe Real Estate Listings</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="list-style.css">
-    <script defer src="listing-script.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mijoe Real Estate Listings</title>
+  <link rel="stylesheet" href="./assets/output.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
-<body>
-        <nav class="navbar">
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="listings.html" class="active">Listings</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <ul class="flex justify-center space-x-8 p-4 text-lg font-medium">
+      <li><a href="./" class="hover:text-blue-600">Home</a></li>
+      <li><a href="listings.html" class="text-blue-600 border-b-2 border-blue-600 pb-1">Listings</a></li>
+      <li><a href="about.html" class="hover:text-blue-600">About</a></li>
+      <li><a href="#contact" class="hover:text-blue-600">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-4">🏡 Real Estate Listings</h1>
+
+    <!-- Search & Filters -->
+    <header class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Find Your Dream Home</h2>
+      <div class="mb-4">
+        <input type="text" placeholder="Search by location, price, type..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button class="filter-btn px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          data-category="all">All</button>
+        <button class="filter-btn px-4 py-2 bg-gray-200 hover:bg-blue-100 rounded" data-category="Self-Con">Self
+          Con</button>
+        <button class="filter-btn px-4 py-2 bg-gray-200 hover:bg-blue-100 rounded" data-category="2-Bed-Room-Flat">2
+          Bedroom Flat</button>
+        <button class="filter-btn px-4 py-2 bg-gray-200 hover:bg-blue-100 rounded" data-category="3-Bed-Room-Flat">3
+          Bedroom Flat</button>
+        <button class="filter-btn px-4 py-2 bg-gray-200 hover:bg-blue-100 rounded" data-category="4-Bed-Room-Flat">4
+          Bedroom Flat</button>
+      </div>
+    </header>
+
+    <!-- Listings -->
+    <section class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Property Card -->
+      <div class="property-card bg-white shadow-md rounded-md overflow-hidden" data-category="Self-Con">
+        <video src="./videos/VID-20250228-WA0002.mp4" controls class="w-full h-52 object-cover"></video>
+        <div class="p-4">
+          <h3 class="text-xl font-semibold mb-2">A Room Self Con</h3>
+          <div class="details-section hidden mb-2">
+            <p class="font-semibold">Facilities:</p>
+            <ul class="list-disc list-inside text-sm ml-2">
+              <li>Tiled</li>
+              <li>Full POP</li>
+              <li>Running Water</li>
+              <li>Fenced and Gated</li>
+              <li>Good Road Access</li>
+              <li>Spacious Compound</li>
             </ul>
-        </nav>
-    <div class="container">
-        <h1>🏡 Real Estate Listings</h1>
-        <!-- Navbar -->
-        <header>
-                <!-- Search Bar -->
-            
-            <!-- Filter Buttons -->
-            <h2>Find Your Dream Home</h2>
-            <div class="search-bar">
-                <input type="text" class="search-box" placeholder="Search by location, price, type...">
-            </div>
-            <nav>
-                <button class="filter-btn" data-category="all">All</button>
-                <button class="filter-btn" data-category="Self-Con">Self Con</button>
-                <button class="filter-btn" data-category="2-Bed-Room-Flat">2 Bed Room Flat</button>
-                <button class="filter-btn" data-category="3-Bed-Room-Flat">3 Bed Room Flat</button>
-                <button class="filter-btn" data-category="4-Bed-Room-Flat">4 Bed Room Flat</button>
-            </nav>
-        </header>
+          </div>
+          <p class="text-sm mb-3"><strong>Location:</strong> 📍 Olorunsogo, Ado-Ekiti. Ekiti State</p>
+          <div class="flex gap-3">
+            <button class="view-details px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">View
+              Details</button>
+            <a href="#"
+              class="contact-btn px-3 py-1 border border-blue-600 text-blue-600 rounded hover:bg-blue-100 text-sm">Contact
+              Agent</a>
+          </div>
+        </div>
+      </div>
 
-        <!-- Listings -->
-        <section class="listings">
-            <!-- Self Con Houses -->
-            <div class="property-card" data-category="Self-Con">
-                <video src="./videos/VID-20250228-WA0002.mp4" alt="House 1" controls></video>
-                <h3>A Room Self Con</h3>
-                <div class="details-section hidden">
-                    <ul>
-                        <p><b>Facilities: </b><br>
-                        <li>Tiled</li>
-                        <li>Full POP</li>
-                        <li>Running Water</li>
-                        <li>Fenced and Gated</li>
-                        <li>Good Road Access</li>
-                        <li>Spacious Compound</li>
-                    </ul>
-                </div>
-                <b> Location:</b>📍 Olorunsogo, Ado-Ekiti. Ekiti State </p>
-                <div class="buttons">
-                    <button class="view-details">View Details</button>
-                    <a href="#" class="contact-btn">Contact Agent</a>
-                </div>
-            </div>
-
-            <!-- 2-Bed-Room-Flat -->
-            <div class="property-card" data-category="2-Bed-Room-Flat">
-                <video src="./videos/Mijoe Prison Road Property.mp4" alt="House 1"  controls></video>
-                    <h3>2 Bedroom Flat</h3>
-                    <div class="details-section hidden">
-                        <p><b>Facilities: </b><br>
-                        <ul>
-                            <li>Tiled</li>
-                            <li>Full POP</li>
-                            <li>Running Water</li>
-                            <li>Fenced and Gated</li>
-                            <li>Good Road Access</li>
-                            <li>Spacious Compound</li>
-                        </ul>
-                    </div>
-                    <b> Location:</b>📍 Very close to army check point along afao road, Ado-Ekiti. Ekiti State.</p>
-                    <div class="buttons">
-                        <button class="view-details">View Details</button>
-                        <a href="#" class="contact-btn">Contact Agent</a>
-                    </div>
-            </div>
-
-            <!-- 3 Bed room flat -->
-            <div class="property-card" data-category="3-Bed-Room-Flat">
-                <video src="./videos/Mijoe Real Estate CBN Property.mp4" alt="House 1"  controls></video>
-                    <h3>3 Bedroom Flat</h3>
-                    <div class="details-section hidden">
-                        <p><b>Facilities: </b><br>
-                        <ul>
-                            <li>Tiled</li>
-                            <li>Full POP</li>
-                            <li>Running Water</li>
-                            <li>Fenced and Gated</li>
-                            <li>Floored Compound</li>
-                            <li>Conducive Enviromnet</li>
-                        </ul>
-                    </div>
-                    <b> Location:</b>📍 Ile-Anu Quaters Behind CBN Along Iyin Road, Ado-Ekiti. Ekiti State</p>
-                    <div class="buttons">
-                        <button class="view-details">View Details</button>
-                        <a href="#" class="contact-btn">Contact Agent</a>
-                    </div>
-            </div>
-        </section>
-
-        <script>
-            document.querySelectorAll('.view-details').forEach(button => {
-                button.addEventListener('click', function() {
-                    const detailsSection = this.closest('.property-card').querySelector('.details-section');
-                    detailsSection.classList.toggle('hidden');
-                });
-            });
-        </script>
-
-    </div>
-</html>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijoe Real Estate Listings</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="list-style.css">
-    <script defer src="listing-script.js"></script>
-</head>
-<body>
-        <nav class="navbar">
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="listings.html" class="active">Listings</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+      <!-- 2 Bedroom Flat -->
+      <div class="property-card bg-white shadow-md rounded-md overflow-hidden" data-category="2-Bed-Room-Flat">
+        <video src="./videos/Mijoe Prison Road Property.mp4" controls class="w-full h-52 object-cover"></video>
+        <div class="p-4">
+          <h3 class="text-xl font-semibold mb-2">2 Bedroom Flat</h3>
+          <div class="details-section hidden mb-2">
+            <p class="font-semibold">Facilities:</p>
+            <ul class="list-disc list-inside text-sm ml-2">
+              <li>Tiled</li>
+              <li>Full POP</li>
+              <li>Running Water</li>
+              <li>Fenced and Gated</li>
+              <li>Good Road Access</li>
+              <li>Spacious Compound</li>
             </ul>
-        </nav>
-    <div class="container">
-        <h1>🏡 Real Estate Listings</h1>
-        <!-- Navbar -->
-        <header>
-                <!-- Search Bar -->
-            
-            <!-- Filter Buttons -->
-            <h2>Find Your Dream Home</h2>
-            <div class="search-bar">
-                <input type="text" class="search-box" placeholder="Search by location, price, type...">
-            </div>
-            <nav>
-                <button class="filter-btn" data-category="all">All</button>
-                <button class="filter-btn" data-category="Self-Con">Self Con</button>
-                <button class="filter-btn" data-category="2-Bed-Room-Flat">2 Bed Room Flat</button>
-                <button class="filter-btn" data-category="3-Bed-Room-Flat">3 Bed Room Flat</button>
-                <button class="filter-btn" data-category="4-Bed-Room-Flat">4 Bed Room Flat</button>
-            </nav>
-        </header>
+          </div>
+          <p class="text-sm mb-3"><strong>Location:</strong> 📍 Near Army Checkpoint, Afao Road, Ado-Ekiti. Ekiti State
+          </p>
+          <div class="flex gap-3">
+            <button class="view-details px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">View
+              Details</button>
+            <a href="#"
+              class="contact-btn px-3 py-1 border border-blue-600 text-blue-600 rounded hover:bg-blue-100 text-sm">Contact
+              Agent</a>
+          </div>
+        </div>
+      </div>
 
-        <!-- Listings -->
-        <section class="listings">
-            <!-- Self Con Houses -->
-            <div class="property-card" data-category="Self-Con">
-                <video src="./videos/VID-20250228-WA0002.mp4" alt="House 1" controls></video>
-                <h3>A Room Self Con</h3>
-                <div class="details-section hidden">
-                    <ul>
-                        <p><b>Facilities: </b><br>
-                        <li>Tiled</li>
-                        <li>Full POP</li>
-                        <li>Running Water</li>
-                        <li>Fenced and Gated</li>
-                        <li>Good Road Access</li>
-                        <li>Spacious Compound</li>
-                    </ul>
-                </div>
-                <b> Location:</b>📍 Olorunsogo, Ado-Ekiti. Ekiti State </p>
-                <div class="buttons">
-                    <button class="view-details">View Details</button>
-                    <a href="#" class="contact-btn">Contact Agent</a>
-                </div>
-            </div>
+      <!-- 3 Bedroom Flat -->
+      <div class="property-card bg-white shadow-md rounded-md overflow-hidden" data-category="3-Bed-Room-Flat">
+        <video src="./videos/Mijoe Real Estate CBN Property.mp4" controls class="w-full h-52 object-cover"></video>
+        <div class="p-4">
+          <h3 class="text-xl font-semibold mb-2">3 Bedroom Flat</h3>
+          <div class="details-section hidden mb-2">
+            <p class="font-semibold">Facilities:</p>
+            <ul class="list-disc list-inside text-sm ml-2">
+              <li>Tiled</li>
+              <li>Full POP</li>
+              <li>Running Water</li>
+              <li>Fenced and Gated</li>
+              <li>Floored Compound</li>
+              <li>Conducive Environment</li>
+            </ul>
+          </div>
+          <p class="text-sm mb-3"><strong>Location:</strong> 📍 Ile-Anu Quarters Behind CBN, Along Iyin Road, Ado-Ekiti.
+            Ekiti State</p>
+          <div class="flex gap-3">
+            <button class="view-details px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">View
+              Details</button>
+            <a href="#"
+              class="contact-btn px-3 py-1 border border-blue-600 text-blue-600 rounded hover:bg-blue-100 text-sm">Contact
+              Agent</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 
-            <!-- 2-Bed-Room-Flat -->
-            <div class="property-card" data-category="2-Bed-Room-Flat">
-                <video src="./videos/Mijoe Prison Road Property.mp4" alt="House 1"  controls></video>
-                    <h3>2 Bedroom Flat</h3>
-                    <div class="details-section hidden">
-                        <p><b>Facilities: </b><br>
-                        <ul>
-                            <li>Tiled</li>
-                            <li>Full POP</li>
-                            <li>Running Water</li>
-                            <li>Fenced and Gated</li>
-                            <li>Good Road Access</li>
-                            <li>Spacious Compound</li>
-                        </ul>
-                    </div>
-                    <b> Location:</b>📍 Very close to army check point along afao road, Ado-Ekiti. Ekiti State.</p>
-                    <div class="buttons">
-                        <button class="view-details">View Details</button>
-                        <a href="#" class="contact-btn">Contact Agent</a>
-                    </div>
-            </div>
+  <!-- View Details Toggle Script -->
+  <script>
+    document.querySelectorAll('.view-details').forEach(button => {
+      button.addEventListener('click', function () {
+        const detailsSection = this.closest('.property-card').querySelector('.details-section');
+        detailsSection.classList.toggle('hidden');
+      });
+    });
+  </script>
+</body>
 
-            <!-- 3 Bed room flat -->
-            <div class="property-card" data-category="3-Bed-Room-Flat">
-                <video src="./videos/Mijoe Real Estate CBN Property.mp4" alt="House 1"  controls></video>
-                    <h3>3 Bedroom Flat</h3>
-                    <div class="details-section hidden">
-                        <p><b>Facilities: </b><br>
-                        <ul>
-                            <li>Tiled</li>
-                            <li>Full POP</li>
-                            <li>Running Water</li>
-                            <li>Fenced and Gated</li>
-                            <li>Floored Compound</li>
-                            <li>Conducive Enviromnet</li>
-                        </ul>
-                    </div>
-                    <b> Location:</b>📍 Ile-Anu Quaters Behind CBN Along Iyin Road, Ado-Ekiti. Ekiti State</p>
-                    <div class="buttons">
-                        <button class="view-details">View Details</button>
-                        <a href="#" class="contact-btn">Contact Agent</a>
-                    </div>
-            </div>
-        </section>
-
-        <script>
-            document.querySelectorAll('.view-details').forEach(button => {
-                button.addEventListener('click', function() {
-                    const detailsSection = this.closest('.property-card').querySelector('.details-section');
-                    detailsSection.classList.toggle('hidden');
-                });
-            });
-        </script>
-
-    </div>
 </html>
->>>>>>> c6b727c (Your commit message)

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Properties</title>
+  <link rel="stylesheet" href="../assets/output.css">
+  <script src="../assets/myscript.js"></script>
+  <!-- <script src="https://kit.fontawesome.com/a2e8e6f124.js" crossorigin="anonymous"></script> -->
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md hidden md:block">
+    <div class="p-6 text-xl font-bold text-gray-800 border-b">Admin Panel</div>
+    <nav class="p-4 space-y-2 text-gray-700">
+      <a href="./dashboard.html" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-100">
+        <i class="fas fa-home mr-3"></i> Dashboard
+      </a>
+      <a href="./dashboard.html" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-100">
+        <i class="fas fa-upload mr-3"></i> Upload Property
+      </a>
+      <a href="./manage-properties.html" class="flex items-center px-4 py-2 rounded-lg bg-blue-100 text-blue-700">
+        <i class="fas fa-tasks mr-3"></i> Manage Properties
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+      <h1 class="text-2xl font-semibold text-gray-800 mb-4 sm:mb-0">Manage Properties</h1>
+      <input id="searchInput" type="text" placeholder="Search by title..."
+        class="border border-gray-300 px-4 py-2 rounded-lg w-full sm:w-72" />
+    </div>
+
+    <div id="propertiesContainer" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-6"></div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center items-center space-x-2" id="pagination">
+      <button id="prevPage" class="px-3 py-1 bg-gray-300 text-gray-700 rounded">Previous</button>
+      <span id="pageInfo" class="text-gray-700"></span>
+      <button id="nextPage" class="px-3 py-1 bg-gray-300 text-gray-700 rounded">Next</button>
+    </div>
+
+    <!-- Update Modal -->
+    <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+        <h2 class="text-xl font-semibold mb-4">Update Property</h2>
+        <form id="updateForm" class="space-y-4">
+          <input type="hidden" id="updateId" />
+          <input type="text" id="updateTitle" placeholder="Title" class="w-full border px-3 py-2 rounded" required />
+          <input type="number" id="updatePrice" placeholder="Price" class="w-full border px-3 py-2 rounded" required />
+          <input type="text" id="updateType" placeholder="Type" class="w-full border px-3 py-2 rounded" required />
+          <input type="text" id="updateCategory" placeholder="Category" class="w-full border px-3 py-2 rounded"
+            required />
+          <input type="text" id="updateLocation" placeholder="Location" class="w-full border px-3 py-2 rounded"
+            required />
+          <div class="text-right">
+            <button type="button" onclick="closeModal()"
+              class="bg-gray-400 text-white px-4 py-2 rounded mr-2">Cancel</button>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Update</button>
+          </div>
+        </form>
+      </div>
+  </main>
+
+  <script>
+    const propertiesContainer = document.getElementById('propertiesContainer');
+    const searchInput = document.getElementById('searchInput');
+    const pageInfo = document.getElementById('pageInfo');
+    const prevPage = document.getElementById('prevPage');
+    const nextPage = document.getElementById('nextPage');
+
+    let allProperties = [];
+    let filteredProperties = [];
+    let currentPage = 1;
+    const itemsPerPage = 6;
+
+    async function fetchProperties() {
+      try {
+        const res = await fetch('/api/properties');
+        const data = await res.json();
+        allProperties = data.data || [];
+        filteredProperties = allProperties;
+        renderProperties();
+      } catch (err) {
+        console.error('Error fetching properties:', err);
+      }
+    }
+
+    function renderProperties() {
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const paginated = filteredProperties.slice(start, end);
+
+      propertiesContainer.innerHTML = '';
+      paginated.forEach((prop) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white shadow rounded-lg overflow-hidden flex flex-col';
+
+        card.innerHTML = `
+          <img src="${(prop.images && prop.images[0]) || 'https://via.placeholder.com/400x250'}"
+               class="w-full h-48 object-cover" alt="${prop.title}" />
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">${prop.title}</h3>
+              <p class="text-gray-600 text-sm">₦${prop.price}</p>
+              <p class="text-gray-500 text-sm">${prop.type} | ${prop.category}</p>
+              <p class="text-gray-500 text-sm">${prop.location}</p>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <button onclick='editProperty(${JSON.stringify(prop)})' class="text-blue-600 hover:underline flex items-center gap-1">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button onclick="deleteProperty('${prop._id}')" class="text-red-600 hover:underline flex items-center gap-1">
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </div>
+          </div>
+        `;
+        propertiesContainer.appendChild(card);
+      });
+
+      const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+      prevPage.disabled = currentPage === 1;
+      nextPage.disabled = currentPage === totalPages;
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      filteredProperties = allProperties.filter((p) =>
+        p.title.toLowerCase().includes(query)
+      );
+      currentPage = 1;
+      renderProperties();
+    });
+
+    prevPage.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderProperties();
+      }
+    });
+
+    nextPage.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderProperties();
+      }
+    });
+
+    function editProperty(prop) {
+      // Fill modal or redirect with prop info
+      updateModal.classList.remove('hidden');
+      document.getElementById('updateId').value = prop._id;
+      document.getElementById('updateTitle').value = prop.title;
+      document.getElementById('updatePrice').value = prop.price;
+      document.getElementById('updateType').value = prop.type;
+      document.getElementById('updateCategory').value = prop.category;
+      document.getElementById('updateLocation').value = prop.location;
+    }
+
+    const closeModal = () => {
+      updateModal.classList.add('hidden');
+    };
+
+    updateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const id = document.getElementById('updateId').value;
+      const updated = {
+        title: document.getElementById('updateTitle').value,
+        price: document.getElementById('updatePrice').value,
+        type: document.getElementById('updateType').value,
+        category: document.getElementById('updateCategory').value,
+        location: document.getElementById('updateLocation').value
+      };
+
+      try {
+        const res = await fetch(`/api/properties/${id}`, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(updated)
+        });
+
+        if (res.ok) {
+          closeModal();
+          fetchProperties();
+        } else {
+          alert('Failed to update');
+        }
+      } catch (err) {
+        console.error('Update failed:', err);
+      }
+    });
+
+    async function deleteProperty(id) {
+      if (!confirm('Are you sure you want to delete this property?')) return;
+
+      try {
+        const res = await fetch(`/api/properties/${id}`, {method: 'DELETE'});
+        if (res.ok) {
+          allProperties = allProperties.filter((p) => p._id !== id);
+          filteredProperties = filteredProperties.filter((p) => p._id !== id);
+          renderProperties();
+        } else {
+          alert('Failed to delete property.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error deleting property.');
+      }
+    }
+
+    fetchProperties();
+  </script>
+</body>
+
+</html>
