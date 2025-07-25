@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin – Users</title>
+  <link rel="stylesheet" href="../assets/output.css">
+  <script src="../assets/myscript.js"></script>
+  <script src="https://kit.fontawesome.com/a2e8e6f124.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md hidden md:block">
+    <div class="p-6 text-xl font-bold text-gray-800 border-b">Admin Panel</div>
+    <nav class="p-4 space-y-2 text-gray-700">
+      <a href="./dashboard.html" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-100">
+        <i class="fas fa-home mr-3"></i> Dashboard
+      </a>
+      <a href="./dashboard.html" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-100">
+        <i class="fas fa-upload mr-3"></i> Upload Property
+      </a>
+      <a href="./manage-properties.html" class="flex items-center px-4 py-2 rounded-lg hover:bg-blue-100">
+        <i class="fas fa-tasks mr-3"></i> Manage Properties
+      </a>
+      <a href="./users.html" class="flex items-center px-4 py-2 rounded-lg bg-blue-100 text-blue-700">
+        <i class="fas fa-users mr-3"></i> Users
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-6">Users</h1>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white rounded shadow">
+        <thead class="bg-gray-100 text-gray-700 text-sm">
+          <tr>
+            <th class="py-3 px-4 text-left">#</th>
+            <th class="py-3 px-4 text-left">Full Name</th>
+            <th class="py-3 px-4 text-left">Email</th>
+            <th class="py-3 px-4 text-left">Phone</th>
+            <th class="py-3 px-4 text-left">Role</th>
+            <th class="py-3 px-4 text-left">Joined</th>
+            <th class="py-3 px-4 text-left">Last Updated</th>
+          </tr>
+        </thead>
+        <tbody id="userTable" class="text-sm text-gray-700">
+          <!-- JS will populate -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    async function fetchUsers() {
+      try {
+        const res = await fetch('/api/users'); // change this to your actual endpoint
+        const json = await res.json();
+        console.log(json)
+        if (json.status === 'success') {
+          populateTable(json.data);
+        } else {
+          alert('Failed to fetch users');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error fetching users');
+      }
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+    }
+
+    function populateTable(users) {
+      const tbody = document.getElementById('userTable');
+      tbody.innerHTML = '';
+
+      users.forEach((user, index) => {
+        const tr = document.createElement('tr');
+        tr.className = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+        tr.innerHTML = `
+          <td class="py-2 px-4">${index + 1}</td>
+          <td class="py-2 px-4">${user.fullname}</td>
+          <td class="py-2 px-4">${user.email}</td>
+          <td class="py-2 px-4">${user.phoneNumber}</td>
+          <td class="py-2 px-4">
+            <span class="inline-block px-2 py-1 text-xs rounded-full ${user.role
+            === 'admin' || user.role === 'agent' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}">
+              ${user.role}
+            </span>
+          </td>
+          <td class="py-2 px-4">${formatDate(user.createdAt)}</td>
+          <td class="py-2 px-4">${formatDate(user.updatedAt)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    fetchUsers();
+  </script>
+</body>
+
+</html>

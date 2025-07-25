@@ -16,4 +16,4 @@ const resError = (res, message = 'An error occurred', code = 500, data = null) =
   });
 };
 
-module.exports = {resSuccess, resError};
+module.exports = { resSuccess, resError };

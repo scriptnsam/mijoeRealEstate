@@ -46,9 +46,10 @@
   <div class="container my-4">
 
     <!-- Toggle Buttons -->
-    <div class="d-flex justify-content-center mb-3">
-      <button id="showBuy" class="btn btn-success w-50">Properties For Sale</button>
-      <button id="showSell" class="btn btn-danger w-50">Properties To Let</button>
+    <div class="d-flex justify-content-center mb-3 gap-2">
+      <button id="showBuy" class="btn btn-success w-100">Properties For Sale</button>
+      <button id="showSell" class="btn btn-danger w-100">Properties To Let</button>
+      <button id="showHostel" class="btn btn-login w-100">Hostels</button>
     </div>
 
     <!-- Search, Filter, and Sort -->
@@ -73,15 +74,19 @@
       </div>
     </div>
 
-    <!-- Property to Buy Section -->
+    <!-- Property Sections -->
     <section id="buySection">
       <h3 class="text-center text-success">Properties For Sale</h3>
       <div class="row property-list"></div>
     </section>
 
-    <!-- Property to Sell Section (Initially Hidden) -->
     <section id="sellSection" class="hidden">
       <h3 class="text-center text-danger">Properties To Let</h3>
+      <div class="row property-list"></div>
+    </section>
+
+    <section id="hostelSection" class="hidden">
+      <h3 class="text-center text-info">Hostels</h3>
       <div class="row property-list"></div>
     </section>
   </div>
@@ -107,10 +112,11 @@
 
           const buyList = document.querySelector('#buySection .property-list');
           const sellList = document.querySelector('#sellSection .property-list');
+          const hostelList = document.querySelector('#hostelSection .property-list');
 
           properties.forEach(property => {
             const card = document.createElement('div');
-            card.className = 'col-md-4 property-item';
+            card.className = 'col-md-4 property-item mb-4';
             card.dataset.price = property.price;
             card.dataset.location = property.location;
 
@@ -119,20 +125,15 @@
               : `<img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="No image">`;
 
             const priceLabel = property.type === 'sale' ? 'Price' : 'Negotiable Price';
-            /** const actionButton = property.type === 'sale'
-              ?`<button class="btn btn-success" style="background-color: red;">Make Payment</button>`
-              : `<button class="btn btn-warning">Available To Let</button>`;
-            */
 
             card.innerHTML = `
-              <div class="card mb-4">
+              <div class="card">
                 ${mediaHTML}
                 <div class="card-body">
                   <h5 class="card-title">${property.title}</h5>
                   <p class="card-text"><strong>Location:</strong> ${property.location}</p>
                   <p class="card-text"><strong>${priceLabel}: ₦${property.price.toLocaleString()}</strong></p>
-                  <button class="btn btn-primary mb-2"
-                    onClick="window.location.href='https://forms.gle/hJ18vTv6KZT1yaeV9'">Make Enquiry</button>
+                  <button class="btn btn-primary mb-2" onClick="window.location.href='https://forms.gle/hJ18vTv6KZT1yaeV9'">Make Enquiry</button>
                 </div>
               </div>
             `;
@@ -141,6 +142,8 @@
               buyList.appendChild(card);
             } else if (property.type === 'rent') {
               sellList.appendChild(card);
+            } else if (property.type === 'hostel') {
+              hostelList.appendChild(card);
             }
           });
         } else {
@@ -155,14 +158,28 @@
 
   <!-- Interactivity Scripts -->
   <script>
-    document.getElementById("showBuy").addEventListener("click", function () {
-      document.getElementById("buySection").classList.remove("hidden");
-      document.getElementById("sellSection").classList.add("hidden");
+    const buySection = document.getElementById("buySection");
+    const sellSection = document.getElementById("sellSection");
+    const hostelSection = document.getElementById("hostelSection");
+
+    function showOnly(sectionId) {
+      buySection.classList.add("hidden");
+      sellSection.classList.add("hidden");
+      hostelSection.classList.add("hidden");
+
+      document.getElementById(sectionId).classList.remove("hidden");
+    }
+
+    document.getElementById("showBuy").addEventListener("click", () => {
+      showOnly("buySection");
     });
 
-    document.getElementById("showSell").addEventListener("click", function () {
-      document.getElementById("sellSection").classList.remove("hidden");
-      document.getElementById("buySection").classList.add("hidden");
+    document.getElementById("showSell").addEventListener("click", () => {
+      showOnly("sellSection");
+    });
+
+    document.getElementById("showHostel").addEventListener("click", () => {
+      showOnly("hostelSection");
     });
 
     document.getElementById("searchBox").addEventListener("input", function () {
@@ -183,8 +200,6 @@
 
     document.getElementById("sortPrice").addEventListener("change", function () {
       let sortValue = this.value;
-      let buyItems = Array.from(document.querySelectorAll("#buySection .property-item"));
-      let sellItems = Array.from(document.querySelectorAll("#sellSection .property-item"));
       const sortItems = (items, container) => {
         items.sort((a, b) => {
           let priceA = parseInt(a.dataset.price);
@@ -193,9 +208,41 @@
         });
         items.forEach(item => container.appendChild(item));
       };
-      sortItems(buyItems, document.querySelector("#buySection .property-list"));
-      sortItems(sellItems, document.querySelector("#sellSection .property-list"));
+
+      sortItems(
+        Array.from(document.querySelectorAll("#buySection .property-item")),
+        document.querySelector("#buySection .property-list")
+      );
+      sortItems(
+        Array.from(document.querySelectorAll("#sellSection .property-item")),
+        document.querySelector("#sellSection .property-list")
+      );
+      sortItems(
+        Array.from(document.querySelectorAll("#hostelSection .property-item")),
+        document.querySelector("#hostelSection .property-list")
+      );
     });
+
+    function showSectionFromHash() {
+      const hash = window.location.hash;
+
+      switch (hash) {
+        case "#sale":
+          showOnly("buySection");
+          break;
+        case "#rent":
+          showOnly("sellSection");
+          break;
+        case "#hostel":
+          showOnly("hostelSection");
+          break;
+        default:
+          showOnly("buySection"); // default
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", showSectionFromHash);
+    window.addEventListener("hashchange", showSectionFromHash);
   </script>
 
 </body>

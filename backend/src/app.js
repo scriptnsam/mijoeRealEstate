@@ -23,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/properties', require('./routes/property'));
 app.use('/api/requests', require('./routes/request'));
 app.use('/api/manage', require('./routes/managementRequest'));
+app.use('/api/users', require('./routes/users'));
 app.use('/api/status', (req, res) => {
   resSuccess(res, "All services up.", {
     siteState: "up",
