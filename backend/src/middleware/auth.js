@@ -27,6 +27,8 @@ const authenticate = async (req, res, next) => {
 // Accepts one or more roles
 const restrictTo = (...roles) => {
   return (req, res, next) => {
+    if (!req.user) return resError(res, 'Unauthorized: No user found', 401);
+
     if (!roles.includes(req.user.role)) {
       return resError(res, 'Access denied. Insufficient permission', 403);
     }

@@ -37,7 +37,7 @@ exports.createProperty = async (req, res) => {
 
 exports.getAllProperties = async (req, res) => {
   try {
-    const properties = await Property.find().populate('listedBy', 'fullname email');
+    const properties = await Property.find().populate('listedBy', 'fullname email').sort({ createdAt: -1 });
     // check if properties length is equal to 0
     if (properties.length === 0) return resError(res, 'Properties not found', 404);
 

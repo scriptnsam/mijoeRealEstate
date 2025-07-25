@@ -1,64 +1,109 @@
-<!-- Include the content of header.php here -->
-<!-- Example header content -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us</title>
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
+
 <body>
-<header>
-  <!-- Header content -->
-  <div id="header"></div> <!-- This is where the header will be inserted -->
+  <header>
+    <!-- Header content -->
+    <div id="header"></div> <!-- This is where the header will be inserted -->
 
-  <script>
+    <script>
       fetch('header.html')
-          .then(response => response.text())
-          .then(data => document.getElementById('header').innerHTML = data)
-          .catch(error => console.error('Error loading the file:', error));
-  </script>
-</header>
+        .then(response => response.text())
+        .then(data => document.getElementById('header').innerHTML = data)
+        .catch(error => console.error('Error loading the file:', error));
+    </script>
+  </header>
 
-<!-- banner -->
-<div class="inside-banner">
-  <div class="container"> 
-  <span class="pull-right"><a href="#">Home</a> / Contact Us</span>
-  <h2>Contact Us</h2>
-</div>
-</div>
-<!-- banner -->
-
-<div class="container">
-<div class="spacer">
-<div class="row contact">
-  <div class="col-lg-6 col-sm-6 ">
-        <input type="text" class="form-control" placeholder="Full Name">
-        <input type="text" class="form-control" placeholder="Email Address">
-        <input type="text" class="form-control" placeholder="Contact Number">
-        <textarea rows="6" class="form-control" placeholder="Message"></textarea>
-    <button type="submit" class="btn btn-success" name="Submit">Send Message</button>
+  <!-- banner -->
+  <div class="inside-banner">
+    <div class="container">
+      <span class="pull-right"><a href="./">Home</a> / Contact Us</span>
+      <h2>Contact Us</h2>
+    </div>
   </div>
-  <div class="col-lg-6 col-sm-6 ">
-  <div class="well"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15817.313488945656!2d5.233258!3d7.6477943999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1047e5ba714e897b%3A0x333ed951f2ff199b!2sMIJOE%20REAL%20ESTATE%20AND%20AGENCY!5e0!3m2!1sen!2sng!4v1742449110982!5m2!1sen!2sng" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-  </div>
-</div>
-</div>
-</div>
+  <!-- banner -->
 
-<!-- Include the content of footer.php here -->
-<!-- Example footer content -->
-<footer>
-  <div id="footer"></div> <!-- This is where the header will be inserted -->
+  <div class="container">
+    <div class="spacer">
+      <div class="row contact">
+        <div class="col-lg-6 col-sm-6 ">
+          <form id="contactForm">
+            <input name="name" type="text" class="form-control" placeholder="Full Name" required>
+            <input name="email" type="text" class="form-control" placeholder="Email Address" required>
+            <input name="phone" type="text" class="form-control" placeholder="Contact Number" required>
+            <textarea name="message" rows="6" class="form-control" placeholder="Message" required></textarea>
+            <button type="submit" id="submitBtn" class="btn btn-success">Send Message</button>
+          </form>
+        </div>
+        <div class="col-lg-6 col-sm-6 ">
+          <div class="well"><iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15817.313488945656!2d5.233258!3d7.6477943999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1047e5ba714e897b%3A0x333ed951f2ff199b!2sMIJOE%20REAL%20ESTATE%20AND%20AGENCY!5e0!3m2!1sen!2sng!4v1742449110982!5m2!1sen!2sng"
+              width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div id="footer"></div> <!-- This is where the header will be inserted -->
+
+    <script>
+      fetch('footer.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('footer').innerHTML = data)
+        .catch(error => console.error('Error loading the file:', error));
+    </script>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-      fetch('footer.html')
-          .then(response => response.text())
-          .then(data => document.getElementById('footer').innerHTML = data)
-          .catch(error => console.error('Error loading the file:', error));
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("submitBtn").innerText = "Loading...";
+
+      const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        message: form.message.value
+      };
+
+      try {
+        const res = await fetch("/api/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        });
+
+        document.getElementById("submitBtn").disabled = false
+        document.getElementById("submitBtn").innerText = "Send Message";
+
+        const result = await res.json();
+        alert(result.message);
+        if (result.status === "success") form.reset();
+      } catch (error) {
+        document.getElementById("submitBtn").disabled = false
+        document.getElementById("submitBtn").innerText = "Send Message";
+
+        alert("Error submitting form.");
+        console.error(error);
+      }
+    });
   </script>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

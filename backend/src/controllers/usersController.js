@@ -3,7 +3,7 @@ const { resSuccess, resError } = require("../utils/response");
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().sort({ createdAt: -1 });
 
     const usersNew = [];
 
