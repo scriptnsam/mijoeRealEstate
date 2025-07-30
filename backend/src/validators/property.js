@@ -3,7 +3,7 @@ const Joi = require('joi');
 exports.propertySchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().allow('', null),
-  type: Joi.string().valid('sale', 'rent','hostel').required(),
+  type: Joi.string().valid('sale', 'rent', 'hostel').required(),
   category: Joi.string().valid('house', 'apartment', 'land', 'hostel').required(),
   location: Joi.string().required(),
   price: Joi.number().positive().required(),
@@ -16,7 +16,7 @@ exports.propertySchema = Joi.object({
 exports.updatePropertySchema = Joi.object({
   title: Joi.string(),
   description: Joi.string().allow('', null),
-  type: Joi.string().valid('sale', 'rent','hostel'),
+  type: Joi.string().valid('sale', 'rent', 'hostel'),
   category: Joi.string().valid('house', 'apartment', 'land', 'hostel'),
   location: Joi.string(),
   price: Joi.number().positive(),

@@ -134,9 +134,19 @@
 
               const priceLabel = property.type === 'sale' ? 'Price' : 'Negotiable Price';
 
-              const enquiryLink = authData.code === 401
-                ? './register.html'
-                : 'https://forms.gle/hJ18vTv6KZT1yaeV9';
+              let enquiryLink;
+
+              if (authData.code === 401) {
+                enquiryLink = './register.html'
+              } else {
+                if (property.type === 'sale') {
+                  enquiryLink = 'https://wa.link/c5kiyu';
+                } else if(property.type === 'rent'){
+                  enquiryLink = 'https://wa.link/xwhjpq';
+                }else if(property.type==='hostel'){
+                  enquiryLink = 'https://wa.link/3k52k5';
+                }
+              }
 
               card.innerHTML = `
               <div class="card">
