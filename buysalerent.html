@@ -134,17 +134,68 @@
 
               const priceLabel = property.type === 'sale' ? 'Price' : 'Negotiable Price';
 
+              const whatsappPhone = '2348144465559';
+              let whatsappMessage;
+
               let enquiryLink;
 
               if (authData.code === 401) {
                 enquiryLink = './register.html'
               } else {
                 if (property.type === 'sale') {
-                  enquiryLink = 'https://wa.link/c5kiyu';
-                } else if(property.type === 'rent'){
-                  enquiryLink = 'https://wa.link/xwhjpq';
-                }else if(property.type==='hostel'){
-                  enquiryLink = 'https://wa.link/3k52k5';
+                  whatsappMessage = encodeURIComponent(`Hi, I'm interested in
+one of your properties for sale. I saw this particular one on your website.
+
+Property Title: ${property.title}
+
+Property Price: ₦${property.price.toLocaleString()}
+
+Property Location: ${property.location}
+
+Property Type: ${property.type}
+
+Property Category: ${property.category}
+
+Property Description: ${property.description}
+`)
+                  enquiryLink =
+                    `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
+                } else if (property.type === 'rent') {
+                  whatsappMessage = encodeURIComponent(`Hi, I'm interested in one of your properties to let. I saw this particular one on your website.
+
+Property Title: ${property.title}
+
+Property Price: ₦${property.price.toLocaleString()}
+
+Property Location: ${property.location}
+
+Property Type: ${property.type}
+
+Property Category: ${property.category}
+
+Property Description: ${property.description}
+
+`)
+                  enquiryLink =
+                    `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
+                } else if (property.type === 'hostel') {
+                  whatsappMessage = encodeURIComponent(`Hi, I'm interested in one of your hostels. I saw this particular one on your website.
+
+Property Title: ${property.title}
+
+Property Price: ₦${property.price.toLocaleString()}
+
+Property Location: ${property.location}
+
+Property Type: ${property.type}
+
+Property Category: ${property.category}
+
+Property Description: ${property.description}
+
+`)
+                  enquiryLink =
+                    `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
                 }
               }
 
@@ -155,7 +206,8 @@
                   <h5 class="card-title">${property.title}</h5>
                   <p class="card-text"><strong>Location:</strong> ${property.location}</p>
                   <p class="card-text"><strong>${priceLabel}: ₦${property.price.toLocaleString()}</strong></p>
-                  <button class="btn btn-primary mb-2" onclick="window.location.href='${enquiryLink}'">Make Enquiry</button>
+                  <button class="btn btn-primary mb-2"
+                    onclick="window.location.href=&quot;${enquiryLink}&quot;">Make Enquiry</button>
                 </div>
               </div>
             `;

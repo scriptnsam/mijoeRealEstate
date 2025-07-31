@@ -13,7 +13,7 @@ const propertySchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['house', 'apartment', 'land', 'hostel'],
+    enum: ['land', 'hotel', 'shop', 'hostel', 'hospital', 'complex', 'gasStation', 'fillingStation', 'residential', 'commercial'],
     required: true
   },
   location: {

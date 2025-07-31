@@ -4,7 +4,7 @@ exports.propertySchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().allow('', null),
   type: Joi.string().valid('sale', 'rent', 'hostel').required(),
-  category: Joi.string().valid('house', 'apartment', 'land', 'hostel').required(),
+  category: Joi.string().valid('land', 'hotel', 'shop', 'hostel', 'hospital', 'complex', 'gasStation', 'fillingStation', 'residential', 'commercial').required(),
   location: Joi.string().required(),
   price: Joi.number().positive().required(),
   // alow at least one image
@@ -17,7 +17,7 @@ exports.updatePropertySchema = Joi.object({
   title: Joi.string(),
   description: Joi.string().allow('', null),
   type: Joi.string().valid('sale', 'rent', 'hostel'),
-  category: Joi.string().valid('house', 'apartment', 'land', 'hostel'),
+  category: Joi.string().valid('land', 'hotel', 'shop', 'hostel', 'hospital', 'complex', 'gasStation', 'fillingStation', 'residential', 'commercial'),
   location: Joi.string(),
   price: Joi.number().positive(),
   // alow at least one image
